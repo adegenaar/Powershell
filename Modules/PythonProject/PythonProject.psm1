@@ -1,56 +1,3 @@
-<#PSScriptInfo
-.VERSION 0.1.0
-.GUID bf663505-5248-4a03-8ebd-8833966425ac
-.AUTHOR adegenaar@degenaar.com
-.COMPANYNAME CHAOS, Inc.
-.COPYRIGHT (c) Albert Degenaar. All rights reserved.
-.TAGS Python
-.LICENSEURI
-.PROJECTURI
-.ICONURI
-.EXTERNALMODULEDEPENDENCIES
-.REQUIREDSCRIPTS
-.EXTERNALSCRIPTDEPENDENCIES
-.RELEASENOTES
-.PRIVATEDATA
-#>
-
-<#
-.SYNOPSIS
-
- Create a new python project.
-
-.DESCRIPTION
-
- Creates a new Python project folder:
- * Creates the Folder, if it doesn't exist
- * If the virtual environment exists, upgrade the environment
- * otherwise, create the virtual environment
- * Activate the virtual environment
- * Create a requirements-dev.txt and a requirements.txt
- * use pip to install the requirements
- * If they don't exist, create the src & test folders
- * If they don't exist, create the __init__.py files in each
-
-.INPUTS
-
-None. You cannot pipe objects to New-PythonProject.ps1.
-
-.OUTPUTS
-
-None. 
-
-.EXAMPLE
-
-PS> New-PythonProject -folder MyPythonProject -modules Simple-Salesforce
-
-.EXAMPLE
-
-PS> New-PythonProject -folder MyPythonProject
-
-#>
-
-
 function New-PythonProject {
 
     [CmdletBinding(SupportsShouldProcess = $true)]
@@ -173,4 +120,40 @@ function New-PythonProject {
     end {
 
     }
+
+
+    <#
+.SYNOPSIS
+
+ Create a new python project.
+
+.DESCRIPTION
+
+ Creates a new Python project folder:
+ * Creates the Folder, if it doesn't exist
+ * If the virtual environment exists, upgrade the environment
+ * otherwise, create the virtual environment
+ * Activate the virtual environment
+ * Create a requirements-dev.txt and a requirements.txt
+ * use pip to install the requirements
+ * If they don't exist, create the src & test folders
+ * If they don't exist, create the __init__.py files in each
+
+.INPUTS
+
+None. You cannot pipe objects to New-PythonProject.ps1.
+
+.OUTPUTS
+
+None. 
+
+.EXAMPLE
+
+PS> New-PythonProject -folder MyPythonProject -modules Simple-Salesforce
+
+.EXAMPLE
+
+PS> New-PythonProject -folder MyPythonProject
+
+#>
 }
