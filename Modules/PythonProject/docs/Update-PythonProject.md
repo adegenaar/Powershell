@@ -5,26 +5,28 @@ online version:
 schema: 2.0.0
 ---
 
-# New-PythonProject
+# Update-PythonProject
 
 ## SYNOPSIS
 
-Create a new python project.
+Update an existing python project.
 
 ## SYNTAX
 
 ```powershell
-New-PythonProject [-folder] <String> [[-modules] <String[]>] [-WhatIf] [-Confirm] [<CommonParameters>]
+Update-PythonProject [-folder] <String> [[-modules] <String[]>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
 
-Creates a new Python project folder:
+Updates an existing Python project folder:
 
-* Creates the Folder, if it doesn't exist
-* If the virtual environment does not exist, create the virtual environment
+* If the folder already exists, error
+* If the virtual environment exists, upgrade the environment
+* otherwise, error
 * Activate the virtual environment
-* Create a requirements-dev.txt and a requirements.txt
+* Create a requirements-dev.txt and a requirements.txt if they don't exist
+* upgrade the requirements.txt with the modules if it already exists
 * use pip to install the requirements
 * If they don't exist, create the src & test folders
 * If they don't exist, create the __init__.py files in each
@@ -34,13 +36,13 @@ Creates a new Python project folder:
 ### EXAMPLE 1
 
 ```powershell
-New-PythonProject -folder MyPythonProject -modules requests,json
+Update-PythonProject -folder MyPythonProject -modules Simple-Salesforce
 ```
 
 ### EXAMPLE 2
 
 ```powershell
-New-PythonProject -folder MyPythonProject
+Update-PythonProject -folder MyPythonProject
 ```
 
 ## PARAMETERS
@@ -116,7 +118,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### None. You cannot pipe objects to New-PythonProject.ps1
+### None. You cannot pipe objects to Update-PythonProject.ps1
 
 ## OUTPUTS
 
