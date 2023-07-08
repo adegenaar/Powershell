@@ -8,15 +8,17 @@ schema: 2.0.0
 # Remove-OldModules
 
 ## SYNOPSIS
+
 Removes older versions of installed modules
 
 ## SYNTAX
 
-```
+```powershell
 Remove-OldModules [-Force] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
 for each installed script or module
 
 * get all versions installed
@@ -26,18 +28,21 @@ for each installed script or module
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
+```powershell
 Remove-OldModules
 ```
 
 ### EXAMPLE 2
-```
+
+```powershell
 Remove-OldModules -Force
 ```
 
 ## PARAMETERS
 
 ### -Force
+
 Adds the -Force param to Uninstall-Module.
 
 ```yaml
@@ -53,14 +58,17 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
+
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
-### None. You cannot pipe objects to Remove-OldModules.
+### None. You cannot pipe objects to Remove-OldModules
+
 ## OUTPUTS
 
-### None.
+### None
+
 ## NOTES
 
 ## RELATED LINKS
@@ -68,4 +76,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 [https://learn.microsoft.com/en-us/powershell/module/powershellget/uninstall-module?view=powershellget-2.x](https://learn.microsoft.com/en-us/powershell/module/powershellget/uninstall-module?view=powershellget-2.x)
 
 [https://learn.microsoft.com/en-us/powershell/module/powershellget/get-installedmodule?view=powershellget-2.x](https://learn.microsoft.com/en-us/powershell/module/powershellget/get-installedmodule?view=powershellget-2.x)
-
