@@ -1,0 +1,203 @@
+{
+    "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.4.json",
+    "version": "2.1.0",
+    "runs": [
+        {
+            "tool": {
+                "driver": {
+                    "name": "PSScriptAnalyzer",
+                    "informationUri": "https://github.com/PowerShell/PSScriptAnalyzer",
+                    "rules": [
+                        {
+                            "id": "PSUseToExportFieldsInManifest",
+                            "name": "PSUseToExportFieldsInManifest",
+                            "helpUri": "https://github.com/PowerShell/Psscriptanalyzer"
+                        },
+                        {
+                            "id": "PSUseShouldProcessForStateChangingFunctions",
+                            "name": "PSUseShouldProcessForStateChangingFunctions",
+                            "helpUri": "https://github.com/PowerShell/Psscriptanalyzer"
+                        },
+                        {
+                            "id": "PSUseSingularNouns",
+                            "name": "PSUseSingularNouns",
+                            "helpUri": "https://github.com/PowerShell/Psscriptanalyzer"
+                        },
+                        {
+                            "id": "PSAvoidTrailingWhitespace",
+                            "name": "PSAvoidTrailingWhitespace",
+                            "helpUri": "https://github.com/PowerShell/Psscriptanalyzer"
+                        }
+                    ]
+                }
+            },
+            "artifacts": [
+                {
+                    "location": {
+                        "uri": "file:///C:/Users/adege/OneDrive/Development/Powershell/Modules/PythonProject/PythonProject.psd1"
+                    }
+                },
+                {
+                    "location": {
+                        "uri": "file:///C:/Users/adege/OneDrive/Development/Powershell/Modules/RemoveOldModules/RemoveOldModules.psd1"
+                    }
+                },
+                {
+                    "location": {
+                        "uri": "file:///C:/Users/adege/OneDrive/Development/Powershell/Modules/RemoveOldModules/RemoveOldModules.psm1"
+                    }
+                }
+            ],
+            "results": [
+                {
+                    "ruleId": "PSUseToExportFieldsInManifest",
+                    "message": {
+                        "text": "Do not use wildcard or $null in this field. Explicitly specify a list for CmdletsToExport.  "
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Users/adege/OneDrive/Development/Powershell/Modules/PythonProject/PythonProject.psd1"
+                                },
+                                "region": {
+                                    "startLine": 75
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "PSUseToExportFieldsInManifest",
+                    "message": {
+                        "text": "Do not use wildcard or $null in this field. Explicitly specify a list for CmdletsToExport.  "
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Users/adege/OneDrive/Development/Powershell/Modules/RemoveOldModules/RemoveOldModules.psd1"
+                                },
+                                "region": {
+                                    "startLine": 75
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "PSUseToExportFieldsInManifest",
+                    "message": {
+                        "text": "Do not use wildcard or $null in this field. Explicitly specify a list for AliasesToExport.  "
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Users/adege/OneDrive/Development/Powershell/Modules/RemoveOldModules/RemoveOldModules.psd1"
+                                },
+                                "region": {
+                                    "startLine": 81
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "PSUseShouldProcessForStateChangingFunctions",
+                    "message": {
+                        "text": "Function 'Remove-OldModules' has verb that could change system state. Therefore, the function has to support 'ShouldProcess'."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Users/adege/OneDrive/Development/Powershell/Modules/RemoveOldModules/RemoveOldModules.psm1"
+                                },
+                                "region": {
+                                    "startLine": 2
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "PSUseSingularNouns",
+                    "message": {
+                        "text": "The cmdlet 'Remove-OldModules' uses a plural noun. A singular noun should be used instead."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Users/adege/OneDrive/Development/Powershell/Modules/RemoveOldModules/RemoveOldModules.psm1"
+                                },
+                                "region": {
+                                    "startLine": 2
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "PSAvoidTrailingWhitespace",
+                    "level": "note",
+                    "message": {
+                        "text": "Line has trailing whitespace"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Users/adege/OneDrive/Development/Powershell/Modules/RemoveOldModules/RemoveOldModules.psm1"
+                                },
+                                "region": {
+                                    "startLine": 27
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "PSAvoidTrailingWhitespace",
+                    "level": "note",
+                    "message": {
+                        "text": "Line has trailing whitespace"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Users/adege/OneDrive/Development/Powershell/Modules/RemoveOldModules/RemoveOldModules.psm1"
+                                },
+                                "region": {
+                                    "startLine": 38
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "ruleId": "PSAvoidTrailingWhitespace",
+                    "level": "note",
+                    "message": {
+                        "text": "Line has trailing whitespace"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "file:///C:/Users/adege/OneDrive/Development/Powershell/Modules/RemoveOldModules/RemoveOldModules.psm1"
+                                },
+                                "region": {
+                                    "startLine": 50
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            "columnKind": "utf16CodeUnits"
+        }
+    ]
+}
