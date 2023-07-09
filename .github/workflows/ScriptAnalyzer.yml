@@ -15,7 +15,6 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
     permissions:
       # required for all workflows
@@ -46,6 +45,23 @@ jobs:
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: results.sarif
+          
+  Test:
+    permissions:
+      # required for all workflows
+      security-events: write
+      # only required for workflows in private repositories
+      actions: read
+      contents: read  
+    # The type of runner that the job will run on
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        #os: [ubuntu-latest, windows-latest]
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
       - name: Perform a Pester test from the Tests.ps1 file
         shell: pwsh
-        run:   Invoke-Pester -Passthru
+        run:   foreach ($file in $(Get-ChildItem *tests.ps1 -Recurse | Sort-Object Directory) ) {
+invoke-pester $file -Passthru }
