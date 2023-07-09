@@ -17,7 +17,12 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build:
-  
+    permissions:
+      # required for all workflows
+      security-events: write
+      # only required for workflows in private repositories
+      actions: read
+      contents: read  
     # The type of runner that the job will run on
     runs-on: ${{ matrix.os }}
     strategy:
