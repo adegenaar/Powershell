@@ -1,6 +1,6 @@
 
 BeforeAll {
-    Import-Module ./PythonProject.psm1 -Force
+    Import-Module $PSScriptRoot/PythonProject.psm1 -Force
 }
 
 Describe 'New-PythonProject' {
