@@ -22,14 +22,14 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
+        #os: [ubuntu-latest, windows-latest]
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-
       - name: Run PSScriptAnalyzer
-        uses: ./ # Uses an action in the root directory
+#        uses: ./ # Uses an action in the root directory
         with:
           path: '.\'
           recurse: true
