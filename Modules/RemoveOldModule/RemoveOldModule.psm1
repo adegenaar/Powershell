@@ -1,6 +1,6 @@
 #requires -Version 2.0 -Modules PowerShellGet
-function Remove-OldModules {
-    [CmdletBinding()]
+function Remove-OldModule {
+    [CmdletBinding(SupportsShouldProcess = $true)]
     param (
         # Adds the -Force param to Uninstall-Module.
         [Parameter(Mandatory = $false)]
@@ -14,17 +14,19 @@ function Remove-OldModules {
 
     $Latest = Get-InstalledModule
     foreach ($module in $Latest) {
-        Write-Verbose -Message "Uninstalling old versions of $($module.Name) [latest is $( $module.Version)]" -Verbose
-        if ($Force.IsPresent) {
-            Get-InstalledModule -Name $module.Name -AllVersions | Where-Object { $_.Version -ne $module.Version } | Uninstall-Module -Verbose -Force
-        }
-        else {
-            Get-InstalledModule -Name $module.Name -AllVersions | Where-Object { $_.Version -ne $module.Version } | Uninstall-Module -Verbose
+        if ($PSCmdlet.ShouldProcess($module, "Remove old modules")) {
+            Write-Verbose -Message "Uninstalling old versions of $($module.Name) [latest is $( $module.Version)]" -Verbose
+            if ($Force.IsPresent) {
+                Get-InstalledModule -Name $module.Name -AllVersions | Where-Object { $_.Version -ne $module.Version } | Uninstall-Module -Verbose -Force
+            }
+            else {
+                Get-InstalledModule -Name $module.Name -AllVersions | Where-Object { $_.Version -ne $module.Version } | Uninstall-Module -Verbose
+            }
         }
     }
 
     <#
-.SYNOPSIS  
+.SYNOPSIS
 
 Removes older versions of installed modules
 
@@ -35,11 +37,11 @@ for each installed script or module
 
 * get all versions installed
 * find the latest
-* remove the older versions 
+* remove the older versions
 
 .INPUTS
 
-None. You cannot pipe objects to Remove-OldModules.
+None. You cannot pipe objects to Remove-OldModule.
 
 .OUTPUTS
 
@@ -47,11 +49,11 @@ None.
 
 .EXAMPLE
 
-PS> Remove-OldModules 
+PS> Remove-OldModule
 
 .EXAMPLE
 
-PS> Remove-OldModules -Force
+PS> Remove-OldModule -Force
 
 .LINK
 

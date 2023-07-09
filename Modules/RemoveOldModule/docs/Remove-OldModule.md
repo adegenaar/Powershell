@@ -5,7 +5,7 @@ online version: https://learn.microsoft.com/en-us/powershell/module/powershellge
 schema: 2.0.0
 ---
 
-# Remove-OldModules
+# Remove-OldModule
 
 ## SYNOPSIS
 
@@ -14,7 +14,7 @@ Removes older versions of installed modules
 ## SYNTAX
 
 ```powershell
-Remove-OldModules [-Force] [<CommonParameters>]
+Remove-OldModule [-Force] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -30,13 +30,13 @@ for each installed script or module
 ### EXAMPLE 1
 
 ```powershell
-Remove-OldModules
+Remove-OldModule
 ```
 
 ### EXAMPLE 2
 
 ```powershell
-Remove-OldModules -Force
+Remove-OldModule -Force
 ```
 
 ## PARAMETERS
@@ -63,7 +63,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### None. You cannot pipe objects to Remove-OldModules
+### None. You cannot pipe objects to Remove-OldModule
 
 ## OUTPUTS
 
