@@ -14,48 +14,54 @@ Describe 'New-PythonProject' {
     It 'Create new project with no modules' {
         $folder = $env:TEMP
         Push-Location $folder
-        New-PythonProject "Test"
+        New-PythonProject 'Test'
         Test-Path -PathType Container $env:TEMP/Test | Should -Be $true
-        Test-Path -PathType Container Src | Should -Be $true
-        Test-Path -PathType Leaf Src/__init__.py | Should -Be $true
-        Test-Path -PathType Container Tests | Should -Be $true
-        Test-Path -PathType Leaf Tests/__init__.py | Should -Be $true
+        Test-Path -PathType Container src | Should -Be $true
+        Test-Path -PathType Leaf src/__init__.py | Should -Be $true
+        Test-Path -PathType Container tests | Should -Be $true
+        Test-Path -PathType Leaf tests/__init__.py | Should -Be $true
         Test-Path -PathType leaf .gitignore | Should -Be $true
+        Test-Path -PathType leaf readme.md | Should -Be $true
+        Test-Path -PathType leaf pyproject.toml | Should -Be $true
         Test-Path -PathType leaf requirements-dev.txt | Should -Be $true
         Test-Path -PathType leaf requirements.txt | Should -Be $false
     }
     It 'Create new project with modules' {
         $folder = $env:TEMP
         Push-Location $folder
-        New-PythonProject "Test" -modules httpx
+        New-PythonProject 'Test' -modules httpx
         Test-Path -PathType Container $env:TEMP/Test | Should -Be $true
-        Test-Path -PathType Container Src | Should -Be $true
-        Test-Path -PathType Leaf Src/__init__.py | Should -Be $true
-        Test-Path -PathType Container Tests | Should -Be $true
-        Test-Path -PathType Leaf Tests/__init__.py | Should -Be $true
+        Test-Path -PathType Container src | Should -Be $true
+        Test-Path -PathType Leaf src/__init__.py | Should -Be $true
+        Test-Path -PathType Container tests | Should -Be $true
+        Test-Path -PathType Leaf tests/__init__.py | Should -Be $true
         Test-Path -PathType leaf .gitignore | Should -Be $true
+        Test-Path -PathType leaf readme.md | Should -Be $true
+        Test-Path -PathType leaf pyproject.toml | Should -Be $true
         Test-Path -PathType leaf requirements-dev.txt | Should -Be $true
         Test-Path -PathType leaf requirements.txt | Should -Be $true
         $modules = Get-Content requirements.txt
-        "httpx" -in $modules | Should -Be $true
+        'httpx' -in $modules | Should -Be $true
     }
     It 'Update project with modules' {
         $folder = $env:TEMP
         Push-Location $folder
-        New-PythonProject "Test" -modules httpx
+        New-PythonProject 'test' -modules httpx
         Set-Location $folder
-        Update-PythonProject "Test" -modules httpx, Simple-Salesforce
+        Update-PythonProject 'test' -modules httpx, Simple-Salesforce
         Test-Path -PathType Container $env:TEMP/Test | Should -Be $true
-        Test-Path -PathType Container Src | Should -Be $true
-        Test-Path -PathType Leaf Src/__init__.py | Should -Be $true
-        Test-Path -PathType Container Tests | Should -Be $true
-        Test-Path -PathType Leaf Tests/__init__.py | Should -Be $true
+        Test-Path -PathType Container src | Should -Be $true
+        Test-Path -PathType Leaf src/__init__.py | Should -Be $true
+        Test-Path -PathType Container tests | Should -Be $true
+        Test-Path -PathType Leaf tests/__init__.py | Should -Be $true
         Test-Path -PathType leaf .gitignore | Should -Be $true
+        Test-Path -PathType leaf readme.md | Should -Be $true
+        Test-Path -PathType leaf pyproject.toml | Should -Be $true
         Test-Path -PathType leaf requirements-dev.txt | Should -Be $true
         Test-Path -PathType leaf requirements.txt | Should -Be $true
         $modules = Get-Content requirements.txt
-        "httpx" -in $modules | Should -Be $true
-        "Simple-Salesforce" -in $modules | Should -Be $true
+        'httpx' -in $modules | Should -Be $true
+        'Simple-Salesforce' -in $modules | Should -Be $true
     }
     AfterEach {
         Start-Sleep -Seconds 5

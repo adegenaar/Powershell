@@ -20,6 +20,7 @@ function New-PythonProject {
 
 
     process {
+        # check for indications that this is not a new installation
         If ($FolderExists) {
             Write-Error ("$Folder already exists.  Use Update-PythonProject to modify")
             return
@@ -36,6 +37,51 @@ function New-PythonProject {
             return
         }
 
+        $VirtualEnv = 'src\.venv'
+        if (Test-Path -Path $(Join-Path $pwd $VirtualEnv)) {
+            Write-Error ("$VirtualEnv already exists.  Use Update-PythonProject to modify")
+            return
+        }
+
+        ###############################
+        # setup the folder structures #
+        ###############################
+
+        # Create the test folder if doesn't exist yet
+        If (!(Test-Path -Path 'tests')) {
+            if ($PSCmdlet.ShouldProcess($VirtualEnv, 'Creating the tests folder')) {
+                Write-Verbose 'Creating tests folder'
+                New-Item -ItemType Directory -Path 'tests' -ErrorAction SilentlyContinue > $null
+            }
+        }
+
+        # Create the __init__.py file if doesn't exist yet
+        if (!(Test-Path -Path 'tests\__init__.py')) {
+            if ($PSCmdlet.ShouldProcess($VirtualEnv, 'Creating the Tests\__init__.py file')) {
+                Write-Verbose 'Creating Tests\__init__.py file'
+                New-Item -ItemType File -Path 'tests' -Name '__init__.py' -Value '# Needed for the operation of the tests' -ErrorAction SilentlyContinue > $null
+            }
+        }
+
+        # Create the src folder if doesn't exist yet
+        If (!(Test-Path -Path 'src')) {
+            if ($PSCmdlet.ShouldProcess('.\src', 'Creating the src folder')) {
+                Write-Verbose 'Creating src folder'
+                New-Item -ItemType Directory -Path $(Join-Path $pwd 'src') -ErrorAction SilentlyContinue > $null
+                Set-Location -Path $(Join-Path $pwd 'src')
+            }
+        }
+
+        # Create the __init__.py if doesn't exist yet
+        if (!(Test-Path -Path '__init__.py')) {
+            if ($PSCmdlet.ShouldProcess('.\src', 'Creating the src\__init__.py file')) {
+                Write-Verbose 'Creating src\__init__.py file'
+                New-Item -ItemType File -Name '__init__.py' -Value '# Needed for the operation of the packaging' -ErrorAction SilentlyContinue > $null
+            }
+        }
+
+        
+
         if ($null -ne $env:VIRTUAL_ENV) {
             try {
                 deactivate(1)
@@ -46,12 +92,13 @@ function New-PythonProject {
         if ($PSCmdlet.ShouldProcess($VirtualEnv, 'Creating new Python virtual environment')) {
             & 'py.exe' -m venv $VirtualEnv --upgrade-deps
             & ".\$VirtualEnv\scripts\activate.ps1"
+            & 'py.exe' -m pip install --upgrade pip
         }
 
         if ($PSCmdlet.ShouldProcess($VirtualEnv, 'Creating the requirements files')) {
-            if (-not(Test-Path -Path '.\requirements-dev.txt')) {
+            if (!(Test-Path -Path '.\requirements-dev.txt')) {
                 Write-Verbose 'Creating requirements-dev.txt'
-                $devmodules = 'wheel', 'pip', 'setuptools', 'black', 'pytest', 'pytest-cov', 'pylint'
+                $devmodules = 'wheel', 'setuptools', 'black', 'pytest', 'pytest-cov', 'pylint'
                 foreach ($devmodule in $devmodules) {
                     "$devmodule" | Out-File -FilePath .\requirements-dev.txt -Append
                 }
@@ -67,38 +114,13 @@ function New-PythonProject {
             }
         }
 
-        # Create the test folder if doesn't exist yet
-        If (!(Test-Path -Path 'Tests')) {
-            if ($PSCmdlet.ShouldProcess($VirtualEnv, 'Creating the Tests folder')) {
-                Write-Verbose 'Creating Tests folder'
-                New-Item -ItemType Directory -Path 'Tests' -ErrorAction SilentlyContinue > $null
+        # Create the readme.md if doesn't exist yet
+        If (!(Test-Path -Path 'readme.md')) {
+            if ($PSCmdlet.ShouldProcess('readme.md', 'Creating the project readme.md file')) {
+                "# $Folder\n\nSample readme\n" | Out-File -FilePath .\readme.md -Append
             }
         }
-
-        # Create the __init__.py file if doesn't exist yet
-        if (!(Test-Path -Path 'Tests\__init__.py')) {
-            if ($PSCmdlet.ShouldProcess($VirtualEnv, 'Creating the Tests\__init__.py file')) {
-                Write-Verbose 'Creating Tests\__init__.py file'
-                New-Item -ItemType File -Path 'tests' -Name '__init__.py' -Value '# Needed for the operation of the tests' -ErrorAction SilentlyContinue > $null
-            }
-        }
-
-        # Create the Src folder if doesn't exist yet
-        If (!(Test-Path -Path 'src')) {
-            if ($PSCmdlet.ShouldProcess('.\Src', 'Creating the Src folder')) {
-                Write-Verbose 'Creating Src folder'
-                New-Item -ItemType Directory -Path 'Src' -ErrorAction SilentlyContinue > $null
-            }
-        }
-
-        # Create the __init__.py if doesn't exist yet
-        if (!(Test-Path -Path 'Src\__init__.py')) {
-            if ($PSCmdlet.ShouldProcess('.\Src', 'Creating the Src\__init__.py file')) {
-                Write-Verbose 'Creating Src\__init__.py file'
-                New-Item -ItemType File -Path 'src' -Name '__init__.py' -Value '# Needed for the operation of the packaging' -ErrorAction SilentlyContinue > $null
-            }
-        }
-
+        
         # Create the .gitignore if doesn't exist yet
         If (!(Test-Path -Path '.gitignore')) {
             if ($PSCmdlet.ShouldProcess('.gitignore', 'Creating the Python .gitignore file')) {
@@ -106,6 +128,31 @@ function New-PythonProject {
             }
         }
 
+        # Create the readme.md if doesn't exist yet
+        If (!(Test-Path -Path 'pyproject.toml')) {
+            if ($PSCmdlet.ShouldProcess('pyproject.toml', 'Creating the pyproject.toml file')) {
+                $content = @"
+[project]
+name = "$Folder"
+version = "0.0.1"
+description = "Replace me with an interesting description"
+authors = [
+    {name = "Albert Degenaar", email = "albert.w.degenaar@accenture.com"},
+]
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "BSD-3-Clause"}
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+
+[tool.setuptools.packages]
+find = {}  # Scanning implicit namespaces is active by default
+"@
+                Set-Content 'pyproject.toml' $content  
+            }
+        }
     }
 
 
