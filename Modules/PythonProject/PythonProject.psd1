@@ -12,7 +12,7 @@
     RootModule        = 'PythonProject.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.2.3'
+    ModuleVersion     = '0.2.4'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -95,10 +95,10 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            Tags = @('build', 'Python')
+            Tags       = @('build', 'Python')
 
             # A URL to the license for this module.
-            # LicenseUri = 'https://en.wikipedia.org/wiki/MIT_License'
+            LicenseUri = 'https://en.wikipedia.org/wiki/MIT_License'
 
             # A URL to the main website for this project.
             # ProjectUri = ''

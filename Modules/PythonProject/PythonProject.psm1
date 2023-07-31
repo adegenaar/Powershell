@@ -65,23 +65,22 @@ function New-PythonProject {
 
         # Create the src folder if doesn't exist yet
         If (!(Test-Path -Path 'src')) {
-            if ($PSCmdlet.ShouldProcess('.\src', 'Creating the src folder')) {
+            if ($PSCmdlet.ShouldProcess('src', 'Creating the src folder')) {
                 Write-Verbose 'Creating src folder'
                 New-Item -ItemType Directory -Path $(Join-Path $pwd 'src') -ErrorAction SilentlyContinue > $null
-                Set-Location -Path $(Join-Path $pwd 'src')
+                #Set-Location -Path $(Join-Path $pwd 'src')
             }
         }
 
         # Create the __init__.py if doesn't exist yet
-        if (!(Test-Path -Path '__init__.py')) {
-            if ($PSCmdlet.ShouldProcess('.\src', 'Creating the src\__init__.py file')) {
+        if (!(Test-Path -Path 'src\__init__.py')) {
+            if ($PSCmdlet.ShouldProcess('src', 'Creating the src\__init__.py file')) {
                 Write-Verbose 'Creating src\__init__.py file'
-                New-Item -ItemType File -Name '__init__.py' -Value '# Needed for the operation of the packaging' -ErrorAction SilentlyContinue > $null
+                New-Item -ItemType File -Path 'src' -Name '__init__.py' -Value '# Needed for the operation of the packaging' -ErrorAction SilentlyContinue > $null
             }
         }
 
-        
-
+        # If there is a virtual environment active, turn it off
         if ($null -ne $env:VIRTUAL_ENV) {
             try {
                 deactivate(1)
@@ -90,9 +89,9 @@ function New-PythonProject {
         }
 
         if ($PSCmdlet.ShouldProcess($VirtualEnv, 'Creating new Python virtual environment')) {
-            & 'py.exe' -m venv $VirtualEnv --upgrade-deps
+            & py.exe -m venv $VirtualEnv --upgrade-deps
             & ".\$VirtualEnv\scripts\activate.ps1"
-            & 'py.exe' -m pip install --upgrade pip
+            & python.exe -m pip install --upgrade pip
         }
 
         if ($PSCmdlet.ShouldProcess($VirtualEnv, 'Creating the requirements files')) {
@@ -103,7 +102,7 @@ function New-PythonProject {
                     "$devmodule" | Out-File -FilePath .\requirements-dev.txt -Append
                 }
             }
-            & 'pip' install --upgrade -r requirements-dev.txt
+            & pip install --upgrade -r requirements-dev.txt
 
             if (!(Test-Path -Path '.\requirements.txt')) {
                 Write-Verbose 'Creating requirements.txt'
@@ -117,7 +116,12 @@ function New-PythonProject {
         # Create the readme.md if doesn't exist yet
         If (!(Test-Path -Path 'readme.md')) {
             if ($PSCmdlet.ShouldProcess('readme.md', 'Creating the project readme.md file')) {
-                "# $Folder\n\nSample readme\n" | Out-File -FilePath .\readme.md -Append
+                $content = @" 
+# $Folder
+
+Sample readme
+"@ 
+                Set-Content '.\readme.md' $content  
             }
         }
         
