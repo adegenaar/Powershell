@@ -12,7 +12,7 @@
     RootModule        = 'PythonProject.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.2.5'
+    ModuleVersion     = '0.2.7'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -69,22 +69,23 @@
     # NestedModules = @()
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-    FunctionsToExport = 'New-PythonProject,Update-PythonProject'
+    FunctionsToExport = 'New-PythonProject', 'Update-PythonProject'
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-    CmdletsToExport   = ''
+    #CmdletsToExport      = 'New-PythonProject', 'Update-PythonProject'
+    CmdletsToExport   = @()
 
     # Variables to export from this module
-    VariablesToExport = ''
+    VariablesToExport = @()
 
     # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
-    AliasesToExport   = ''
+    AliasesToExport   = @()  # Also ensure all three entries are present
 
     # DSC resources to export from this module
-    # DscResourcesToExport = @()
+    #DscResourcesToExport = @()
 
     # List of all modules packaged with this module
-    # ModuleList = @()
+    ModuleList        = @()
 
     # List of all files packaged with this module
     FileList          = @()
@@ -95,10 +96,10 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            Tags       = @('build', 'Python')
+            #Tags = @('build', 'Python')
 
             # A URL to the license for this module.
-            LicenseUri = 'https://en.wikipedia.org/wiki/MIT_License'
+            # LicenseUri = 'https://en.wikipedia.org/wiki/MIT_License'
 
             # A URL to the main website for this project.
             # ProjectUri = ''
